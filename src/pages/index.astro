@@ -1,0 +1,26 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PostCard from "../components/PostCard.astro";
+
+const posts = (await getCollection("posts", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+);
+---
+
+<BaseLayout>
+  <section class="home-intro">
+    <p class="eyebrow">个人技术笔记</p>
+    <h1>个人技术笔记</h1>
+    <p>关于 Vibe Coding、计算机知识，以及还没被归类的想法。</p>
+  </section>
+  <section class="post-section" aria-labelledby="recent-posts">
+    <div class="section-heading">
+      <h2 id="recent-posts">最近文章</h2>
+      <a href="/posts/">全部文章</a>
+    </div>
+    <div class="post-list">
+      {posts.slice(0, 5).map((post) => <PostCard post={post} />)}
+    </div>
+  </section>
+</BaseLayout>

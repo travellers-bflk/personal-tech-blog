@@ -1,0 +1,63 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "个人技术笔记",
+  description = "Vibe coding, computer notes, and loose thoughts.",
+} = Astro.props;
+const pageTitle = title === "个人技术笔记" ? title : `${title} | 个人技术笔记`;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title="个人技术笔记 RSS" href="/rss.xml" />
+    <script is:inline>
+      const savedTheme = localStorage.getItem("theme");
+      const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = savedTheme || preferredTheme;
+    </script>
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="wordmark" href="/" aria-label="个人技术笔记首页">个人技术笔记</a>
+      <nav aria-label="主导航">
+        <a href="/posts/">文章</a>
+        <a href="/tags/">标签</a>
+        <a href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
+        <label class="theme-toggle" title="切换深色模式">
+          <input id="theme-toggle" type="checkbox" aria-label="切换深色模式" />
+          <span class="theme-toggle-track" aria-hidden="true"><span></span></span>
+        </label>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <span>个人技术笔记</span>
+      <span>记录正在学习和构建的东西</span>
+    </footer>
+    <script is:inline>
+      const themeToggle = document.querySelector("#theme-toggle");
+      const isDark = document.documentElement.dataset.theme === "dark";
+      themeToggle.checked = isDark;
+      themeToggle.addEventListener("change", () => {
+        const theme = themeToggle.checked ? "dark" : "light";
+        document.documentElement.dataset.theme = theme;
+        localStorage.setItem("theme", theme);
+      });
+    </script>
+  </body>
+</html>

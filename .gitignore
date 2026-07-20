@@ -1,0 +1,26 @@
+node_modules/
+dist/
+.astro/
+.npm-cache/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.local
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local deployment state and logs
+.wrangler/
+.vercel/
+*.log
+npm-debug.log*
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
